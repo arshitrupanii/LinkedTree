@@ -13,15 +13,13 @@ const Generate = () => {
   const [picture, setPicture] = useState("");
 
   const handleLinkChange = (index, link, linkText) => {
-    setLinks((initializeLink) =>
-      initializeLink.map((item, i) => {
-        if (i === index) {
-          return { link: linkText, linkText: link }; // Fixed the parameters
-        } else {
-          return item;
-        }
-      })
-    );
+    setLinks(links.map((item, i) => {
+      if (i == index) {
+        return { link: link, linkText: linkText };
+      } else {
+        return item;
+      }
+    }));
   };
   
   
@@ -96,15 +94,15 @@ const Generate = () => {
               <input
                 type="text"
                 value={item.linkText}
-                onChange={(e) => handleLinkChange(index, item.linkText ,e.target.value)}
+                onChange={(e) => handleLinkChange(index, item.link, e.target.value)}
                 placeholder="Link Text"
                 className="flex-1 rounded-lg px-4 py-3 bg-white text-black placeholder-gray-500 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-md"
               />
-              {console.log(item, index)}
+              {console.log(index ," link = ", item.link, " linkText = ", item.linkText)}
               <input
                 type="text"
                 value={item.link}
-                onChange={(e) => handleLinkChange(index, item.link, e.target.value)}
+                onChange={(e) => handleLinkChange(index, e.target.value, item.linkText)}
                 placeholder="Link URL"
                 className="flex-1 rounded-lg px-4 py-3 bg-white text-black placeholder-gray-500 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-md"
               />
