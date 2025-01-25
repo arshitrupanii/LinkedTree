@@ -1,31 +1,29 @@
 "use client";
 import { ToastContainer, toast } from 'react-toastify';
 import React, { useState } from "react";
-import { Rethink_Sans } from 'next/font/google';
 
 const Generate = () => {
   const notify = () => toast("Added link successfully!");
 
-  // const [link, setLink] = useState("");
-  // const [linkText, setLinkText] = useState("");
   const [links, setLinks] = useState([{ link: "", linkText: "" }]);
   const [handle, setHandle] = useState("");
   const [picture, setPicture] = useState("");
 
   const handleLinkChange = (index, link, linkText) => {
-    setLinks(links.map((item, i) => {
-      if (i == index) {
-        return { link: link, linkText: linkText };
-      } else {
-        return item;
-      }
-    }));
+    setLinks((initializeLink) =>
+      initializeLink.map((item, i) => {
+        if (i === index) {
+          return { link: link, linkText: linkText };
+        } else {
+          return item;
+        }
+      })
+    );
   };
-  
-  
+
   const addLink = () => {
     setLinks([...links, { link: "", linkText: "" }]);
-  }
+  };
 
   const handleSubmit = async () => {
     const myHeaders = new Headers();
@@ -51,10 +49,8 @@ const Generate = () => {
       const data = await response.json();
       console.log(data.message);
 
-      // Reset fields after submission
       setHandle("");
       setPicture("");
-
       notify();
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -62,84 +58,84 @@ const Generate = () => {
   };
 
   return (
-    <div
-      className="min-h-[120vh] grid grid-cols-2">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 grid lg:grid-cols-2 gap-8 px-4 py-8">
       {/* Left Section */}
-      <div className="flex flex-col justify-center px-[10vw] space-y-10">
-        <h1 className="text-5xl font-extrabold text-white drop-shadow-lg">
-          Create your Bittree
+      <div className="flex flex-col justify-center space-y-6">
+        <h1 className="text-4xl font-extrabold text-white drop-shadow-lg text-center">
+          Create Your Bittree
         </h1>
 
         {/* Step 1 */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-100">
-            Step 1: Choose your handle
-          </h2>
+        <div className="space-y-4 bg-gray-700 p-5 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold">Step 1: Choose Your Handle</h2>
           <input
             type="text"
             value={handle}
             onChange={(e) => setHandle(e.target.value)}
             placeholder="Choose your handle"
-            className="w-full rounded-lg px-4 py-3 bg-white text-black placeholder-gray-500 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-md"
+            className="w-full rounded-lg px-4 py-3 bg-gray-800 text-gray-100 placeholder-gray-500 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner"
           />
         </div>
 
         {/* Step 2 */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-100">
-            Step 2: Add links
-          </h2>
-          {links && links.map((item, index) => (
-            <div key={index} className="flex gap-4">
+        <div className="space-y-4 bg-gray-700 p-5 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold">Step 2: Add Links</h2>
+          {links.map((item, index) => (
+            <div key={index} className="flex flex-wrap gap-4 mb-3">
               <input
                 type="text"
                 value={item.linkText}
                 onChange={(e) => handleLinkChange(index, item.link, e.target.value)}
                 placeholder="Link Text"
-                className="flex-1 rounded-lg px-4 py-3 bg-white text-black placeholder-gray-500 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-md"
+                className="flex-1 rounded-lg px-4 py-3 bg-gray-800 text-gray-100 placeholder-gray-500 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner"
               />
-              {console.log(index ," link = ", item.link, " linkText = ", item.linkText)}
               <input
                 type="text"
                 value={item.link}
                 onChange={(e) => handleLinkChange(index, e.target.value, item.linkText)}
                 placeholder="Link URL"
-                className="flex-1 rounded-lg px-4 py-3 bg-white text-black placeholder-gray-500 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-md"
+                className="flex-1 rounded-lg px-4 py-3 bg-gray-800 text-gray-100 placeholder-gray-500 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner"
               />
             </div>
           ))}
-          <button onClick={()=>addLink()} className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg">+ Add Link</button>
-
-          
+          <button
+            onClick={addLink}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg shadow-lg transition-all"
+          >
+            + Add Link
+          </button>
         </div>
 
         {/* Step 3 */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-100">
-            Step 3: Add picture and finalize
-          </h2>
+        <div className="space-y-4 bg-gray-700 p-5 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold">Step 3: Add Picture and Finalize</h2>
           <input
             type="text"
             value={picture}
             onChange={(e) => setPicture(e.target.value)}
             placeholder="Picture URL"
-            className="w-full rounded-lg px-4 py-3 bg-white text-black aceholder-gray-500 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-md"
+            className="w-full rounded-lg px-4 py-3 bg-gray-800 text-gray-100 placeholder-gray-500 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-inner"
           />
         </div>
 
         {/* Submit Button */}
-        <button onClick={handleSubmit} className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold px-8 py-4 rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-700 transition-all">Create Bitlink</button>
+        <button
+          onClick={handleSubmit}
+          className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-700 transition-all"
+        >
+          Create Bitlink
+        </button>
       </div>
 
       {/* Right Section */}
-      <div className="w-full h-[120vh] object-cover ">
+      <div className="relative w-full h-[50vh] lg:h-auto bg-cover bg-center rounded-lg shadow-lg">
         <img
           src="/img2.png"
           alt="Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover rounded-lg shadow-md"
         />
-
       </div>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -153,7 +149,6 @@ const Generate = () => {
         theme="dark"
       />
     </div>
-
   );
 };
 
