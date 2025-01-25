@@ -23,6 +23,7 @@ const Generate = () => {
 
   const addLink = () => {
     setLinks([...links, { link: "", linkText: "" }]);
+    notify(); // Notify when a link is added
   };
 
   const handleSubmit = async () => {
@@ -58,15 +59,14 @@ const Generate = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 grid lg:grid-cols-2 gap-8 px-4 py-8">
-      {/* Left Section */}
-      <div className="flex flex-col justify-center space-y-6">
-        <h1 className="text-4xl font-extrabold text-white drop-shadow-lg text-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 flex justify-center py-8 pt-[30vh]">
+      <div className="w-full max-w-lg bg-gray-700 rounded-lg fixed shadow-lg p-6">
+        <h1 className="text-4xl font-extrabold text-white drop-shadow-lg text-center mb-6">
           Create Your Bittree
         </h1>
 
         {/* Step 1 */}
-        <div className="space-y-4 bg-gray-700 p-5 rounded-lg shadow-md">
+        <div className="space-y-4">
           <h2 className="text-xl font-semibold">Step 1: Choose Your Handle</h2>
           <input
             type="text"
@@ -78,10 +78,10 @@ const Generate = () => {
         </div>
 
         {/* Step 2 */}
-        <div className="space-y-4 bg-gray-700 p-5 rounded-lg shadow-md">
+        <div className="space-y-4 mt-4">
           <h2 className="text-xl font-semibold">Step 2: Add Links</h2>
           {links.map((item, index) => (
-            <div key={index} className="flex flex-wrap gap-4 mb-3">
+            <div key={index} className="flex flex-col lg:flex-row gap-4 mb-3">
               <input
                 type="text"
                 value={item.linkText}
@@ -107,7 +107,7 @@ const Generate = () => {
         </div>
 
         {/* Step 3 */}
-        <div className="space-y-4 bg-gray-700 p-5 rounded-lg shadow-md">
+        <div className="space-y-4 mt-4">
           <h2 className="text-xl font-semibold">Step 3: Add Picture and Finalize</h2>
           <input
             type="text"
@@ -121,19 +121,10 @@ const Generate = () => {
         {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-700 transition-all"
+          className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-700 transition-all mt-6 w-full"
         >
           Create Bitlink
         </button>
-      </div>
-
-      {/* Right Section */}
-      <div className="relative w-full h-[50vh] lg:h-auto bg-cover bg-center rounded-lg shadow-lg">
-        <img
-          src="/img2.png"
-          alt="Background"
-          className="w-full h-full object-cover rounded-lg shadow-md"
-        />
       </div>
 
       <ToastContainer
